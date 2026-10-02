@@ -47,3 +47,9 @@ main.playing,main.playing #hud{user-select:none;-webkit-user-select:none;-webkit
 #promotionArt{width:100%;height:auto;aspect-ratio:12/7;display:block;border-radius:10px;background:#123342;margin-top:10px}#promotionCaption{text-align:center;color:#ffe3a4;font-weight:bold;font-size:14px;margin:10px 0}#multiPanel:has(#raceResults:not([hidden]))>h1,#multiPanel:has(#raceResults:not([hidden]))>p:first-of-type,#multiPanel:has(#raceResults:not([hidden]))>.eyebrow{display:none}#raceWinner{text-align:center;color:#b6efda}#raceRanks{font-size:14px}
 
 #netStatus{position:absolute;right:10px;top:10px;z-index:8;padding:5px 8px;border-radius:8px;background:#142d3ee8;color:#c3eadc;font-size:11px;pointer-events:none}#netStatus.slow{color:#ffd581}#raceBest{color:#b9e7d9;font-weight:700}
+
+#secureCargo{position:absolute;bottom:100px;left:50%;transform:translateX(-50%);z-index:9;background:#f0ba71;color:#19343f;padding:10px 16px;font-weight:900}#cargoRule{display:block;margin:5px 0;color:#ffdda1;font-size:11px}.offers{flex-wrap:wrap}
+
+.job-meta{flex-wrap:wrap}#cargoRule{flex-basis:100%;width:100%}
+
+#cargoStatus{margin-top:8px;padding:8px 9px;background:#071f2d;border:1px solid #668a87;border-radius:6px}#cargoStatus>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:8px}#cargoLabel{font-size:10px;letter-spacing:.4px;color:#bde7d1}#cargoValue{font-size:20px;line-height:1;color:#ffe5a0;font-variant-numeric:tabular-nums}.cargo-meter{height:5px;background:#284d56;border-radius:3px;margin-top:6px;overflow:hidden}.cargo-meter i{display:block;height:100%;background:#ffc56b}#cargoStatus.urgent{border-color:#ff806c}#cargoStatus.urgent #cargoLabel,#cargoStatus.urgent #cargoValue{color:#ff9c88}#cargoStatus.urgent .cargo-meter i{background:#ff806c}

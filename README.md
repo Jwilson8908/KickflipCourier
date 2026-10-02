@@ -102,3 +102,11 @@ Refreshing the same browser tab restores its room, courier identity, score, and 
 In both solo and multiplayer, toy pickups are scarcer, require close lane centering, and cannot be collected while airborne or grinding. The initial toy is in the left lane. When Bitey steals cargo, the HUD and his label show distance in feet, with a lane hint and remaining recovery time.
 
 Additional checks: `node test-reconnect.mjs`, `node test-toy-difficulty.mjs`, and `node test-result-scenes.mjs`.
+
+## Cargo challenges and status
+
+Choose hot pizza, a glass trophy, a live lobster, or a birthday cake as your first delivery. Pizza has a 25-second heat countdown and earns up to $25 extra when delivered hot; cold pizza keeps its base pay. Trophy integrity and cake frosting bars show damage that reduces delivery value. Birthday cakes need slow, straight landings.
+
+Lobsters count down to an escape attempt, then give a three-second warning. Press **F** or tap **Secure lobster** during that window. Escapes lose cargo and three seconds; successfully securing and delivering earns a bonus. These mechanics and HUD indicators work in solo and multiplayer, with authoritative race handling.
+
+Run `node test-cargo.mjs` and `node test-cargo-status.mjs` for cargo behavior, payouts, secure input, countdowns, and condition indicators.
