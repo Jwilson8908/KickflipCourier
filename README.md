@@ -94,3 +94,11 @@ Run audio scheduling checks with `node test-audio.mjs`.
 The browser immediately shows steering, jumps, and boost while the server remains responsible for scoring and collisions. Ordered swipes are kept until acknowledged. Opponent updates contain scores and status rather than their full road state. Camera correction is gradual, and obstacles retain fixed world coordinates so the road scrolls once without snapping on each update. Phone rendering uses a lower pixel density to reduce drawing cost.
 
 Run `node test-network-view.mjs` and `node test-mobile-network.mjs` to check rendered coordinates across delayed updates, swipe acknowledgement, duplicate inputs, and bounded prediction.
+
+## Reconnect, sharing, and chase updates
+
+Refreshing the same browser tab restores its room, courier identity, score, and input sequence. The room token is kept only in session storage; leaving clears it, and expired rooms return to the start screen. A connection indicator shows latency and slow/reconnecting status. Share room opens native sharing when available or copies a link that pre-fills the code. Multiplayer results compare earnings against a separate saved race best.
+
+In both solo and multiplayer, toy pickups are scarcer, require close lane centering, and cannot be collected while airborne or grinding. The initial toy is in the left lane. When Bitey steals cargo, the HUD and his label show distance in feet, with a lane hint and remaining recovery time.
+
+Additional checks: `node test-reconnect.mjs`, `node test-toy-difficulty.mjs`, and `node test-result-scenes.mjs`.

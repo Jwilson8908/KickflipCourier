@@ -1,0 +1,3 @@
+import assert from 'node:assert/strict';import {createShift,update} from './dist/engine.js';
+function pickup(lane,jump=0){const s=createShift();s.forkAt=Infinity;s.spawnAt=Infinity;s.obstacles=[{z:1,lane:0,type:'toy',hit:false}];s.lane=s.targetLane=lane;s.jump=jump;update(s,{},.01,()=>.9);return s;}
+assert.equal(pickup(0).toys,1);assert.equal(pickup(.4).toys,0);assert.equal(pickup(0,.5).toys,0);let s=pickup(0);update(s,{},.01,()=>.9);assert.equal(s.toys,1);assert.equal(createShift().obstacles[0].lane,-1);console.log('PASS centered grounded pickup, near-lane miss, airborne miss, no duplicate pickup and intentional initial lane.');

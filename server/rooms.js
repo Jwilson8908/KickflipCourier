@@ -15,6 +15,7 @@ export function advance(room,now){
 export function mutate(room,b,now){advance(room,now);const p=room.players.find(p=>p.token===b.token);
  if(b.action==='join'){if(room.phase!=='lobby')throw Error('Race already started. Wait for the next race.');if(room.players.length>=4)throw Error('Room is full.');room.players.push(player(b,now));return room.players.at(-1);}
  if(!p)throw Error('Rejoin this room to play.');p.seen=now;
+ if(b.action==='resume')p.input={};
  if(b.action==='leave'){room.players=room.players.filter(x=>x!==p);if(p.id===room.host)room.host=room.players[0]?.id;return p;}
  if(b.action==='start'||b.action==='rematch'){
   if(p.id!==room.host)throw Error('Only the host can start the race.');
@@ -22,7 +23,7 @@ export function mutate(room,b,now){advance(room,now);const p=room.players.find(p
   const online=room.players.filter(x=>now-x.seen<10000);if(online.length<2)throw Error('Two connected couriers are needed.');room.players=online;room.phase='countdown';room.starts=now+3500;room.tick=room.starts;room.round++;
   const seed=(now>>>0);for(const x of room.players){x.rng=seed;x.input={};x.seq=0;x.game=createShift(0);x.game.toys=1;x.game.dogIntro=0;x.game.dogEvents=0;x.game.dogReadyAt=14;x.game.forkAt=1e12;x.game.spawnAt=1e12;
 let terrain=seed;const terrainRandom=()=>{terrain=(Math.imul(1664525,terrain)+1013904223)>>>0;return terrain/4294967296;};
-for(let z=700;z<4000;z+=170){const types=['car','barrel','rail','ramp','toy','sprinkler'],type=types[Math.floor(terrainRandom()*types.length)];x.game.obstacles.push({z,lane:Math.floor(terrainRandom()*3)-1,type,length:type==='rail'?180:0,hit:false});}}
+for(let z=700;z<4000;z+=170){const types=['car','barrel','rail','ramp','sprinkler','car','barrel','rail','ramp','sprinkler','toy','rail'],type=types[Math.floor(terrainRandom()*types.length)];x.game.obstacles.push({z,lane:Math.floor(terrainRandom()*3)-1,type,length:type==='rail'?180:0,hit:false});}}
  }
  if(b.action==='input'&&room.phase==='race'&&Number.isSafeInteger(b.seq)&&b.seq>p.seq){p.seq=b.seq;const i=b.input||{};p.input={boost:!!i.boost,brake:!!i.brake};if(Array.isArray(i.laneSteps)){for(const direction of i.laneSteps.slice(0,8))if(direction===-1||direction===1)p.game.targetLane=Math.max(-1,Math.min(1,p.game.targetLane+direction));}for(const k of ['left','right','jump','deliver'])if(i[k]&&(!Array.isArray(i.laneSteps)||!['left','right'].includes(k)))p.input[k]=true;if(i.toy===-1||i.toy===1)p.input.toy=i.toy;}
  return p;
