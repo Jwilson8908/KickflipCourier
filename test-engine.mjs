@@ -1,4 +1,4 @@
-import assert from 'node:assert/strict';import {createShift as makeShift,update} from './engine.js';
+import assert from 'node:assert/strict';import {createShift as makeShift,update} from './dist/engine.js';
 function createShift(choice=0){const s=makeShift(choice);s.forkAt=Infinity;return s;}
 let s=createShift(0);s.obstacles=[];s.distance=s.job.at;s.lane=s.targetLane=-1;update(s,{deliver:true},.01,()=>.9);assert.equal(s.jobs,1);assert.equal(s.cash,50);assert.ok(s.time>60);
 s=createShift(1);s.chase=true;s.dogGap=10;s.obstacles=[];s.distance=s.job.at;s.lane=s.targetLane=1;update(s,{deliver:true},.01,()=>.9);assert.equal(s.hazard,50);assert.equal(s.cash,110);
@@ -45,7 +45,7 @@ s=createShift();s.time=.001;update(s,{},.01);assert.equal(s.phase,'complete');co
  console.log('PASS near-miss single payout, ratings/tips, combo bank/expiry, restored intro freezes gameplay');
 }
 {
- const {neighborhood}=await import('./engine.js');for(const [distance,district] of [[0,0],[1499,0],[1500,1],[3000,2],[4500,0]]){const s=createShift();s.distance=distance;assert.equal(neighborhood(s),district);}
+ const {neighborhood}=await import('./dist/engine.js');for(const [distance,district] of [[0,0],[1499,0],[1500,1],[3000,2],[4500,0]]){const s=createShift();s.distance=distance;assert.equal(neighborhood(s),district);}
  const s=createShift();s.distance=3000;s.spawnAt=0;s.job.at=5000;s.obstacles=[];update(s,{},.01,()=>.6);assert.equal(s.obstacles[0].type,'rail');assert.equal(s.obstacles[0].length,240);console.log('PASS neighborhood progression and longer Boardwalk rails');
 }
 

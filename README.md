@@ -4,7 +4,7 @@
 
 ![Kickflip Courier cover art](cover.png)
 
-Deliver ridiculous cargo, land skateboard tricks, and outrun Mr. Bitey—the tiny Chihuahua who wants your job. An original single-player browser arcade game for phones and laptops. No login or installation required.
+Deliver ridiculous cargo, land skateboard tricks, and outrun Mr. Bitey—the tiny Chihuahua who wants your job. An original browser arcade game with solo shifts and 2–4 player cash races for phones and laptops. No login or installation required.
 
 ## Play
 
@@ -28,15 +28,29 @@ Bitey can chase you or steal your package. Boost after him to recover stolen car
 - Q / R: toss a toy left / right.
 - Escape: pause.
 
-## Run locally
+## Multiplayer
 
-Serve this folder with any static web server. For example, with Python 3:
+Create a room and share its five-character code. The host starts when at least two players are connected. Each courier sees their own road and skater, with opponents' cash totals in the live scoreboard. Everyone races for 60 seconds on the same seeded course. The server calculates movement, actions, earnings, finish, and results. Most cash wins; ties share the promotion. Host rematch keeps the room together.
+
+Winners celebrate in a suit and tie, holding Mr. Bitey with confetti and an original fanfare. Losing couriers get a promotion review: Bitey stamps DENIED, adds deliveries and a weekend shift, then nips at their trouser leg while they hop and cry cartoon tears. Both scenes preserve the same shared standings. Keyboard shortcuts leave name and room-code fields alone.
+
+## Run and build
+
+For a **solo-only** local preview, serve this repository with a static web server:
 
 ```sh
 python3 -m http.server 8000
 ```
 
-Open http://localhost:8000. No build step or package installation is required.
+Open http://localhost:8000. Multiplayer needs the server and database; static hosting alone does not support room codes.
+
+Build the production Worker with Node.js:
+
+```sh
+npm run build
+```
+
+The build embeds `dist/` client files and the authoritative room server into `dist/server/index.js`. Host this Worker with a Cloudflare Workers-compatible runtime and a D1-compatible SQLite database bound as `DB`. Apply the SQL in `drizzle/0000_tidy_the_phantom.sql` before serving multiplayer. `db/schema.ts` and `drizzle.config.ts` document the database schema. The live Sites deployment is managed separately; credentials and account-specific hosting configuration are excluded from this repository.
 
 ## Checks
 
@@ -44,12 +58,21 @@ With Node.js installed:
 
 ```sh
 node test-engine.mjs
+node test-audio.mjs
+node test-multiplayer.mjs
+node test-result-scenes.mjs
 ```
 
 The simulation checks cover deliveries, PvE hazards, car collision endings, rail grinding, tricks, route rewards, toy inventory and distractions, cargo damage, theft recovery, streak bonuses, and mobile boost input.
 
+Multiplayer tests use Node.js 22.13+ with its built-in SQLite module. Result-scene checks cover winner/loser selection, tied winners, and playing the correct audio once per round.
+
 ## Project files
 
+- `dist/`: production browser source and assets (also mirrored at the root for the simple solo preview).
+- `server/rooms.js`: authoritative room API, simulation, and synchronized results.
+- `scripts/build.mjs`: self-contained Worker build.
+- `db/` and `drizzle/`: database schema and migration.
 - `engine.js`: gameplay simulation.
 - `game.js`: canvas rendering, UI, controls, audio, and browser saves.
 - `index.html` and `style.css`: responsive game interface.

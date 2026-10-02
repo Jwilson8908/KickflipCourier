@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {DatabaseSync} from 'node:sqlite';
+import {roomAPI,advance,mutate} from './server/rooms.js';
+const db=new DatabaseSync(':memory:');db.exec('CREATE TABLE courier_rooms(code TEXT PRIMARY KEY,state TEXT NOT NULL,revision INTEGER DEFAULT 0,updated INTEGER NOT NULL)');
+const DB={prepare(sql){return {bind(...args){return {first:async()=>db.prepare(sql).get(...args),run:async()=>({meta:{changes:Number(db.prepare(sql).run(...args).changes)}})};}};}};
+async function call(body){const r=await roomAPI(new Request('http://localhost/api/race',{method:'POST',body:JSON.stringify(body)}),{DB});const d=await r.json();assert.equal(r.status,200,JSON.stringify(d));return d;}
+const a=await call({action:'create',name:'Alice'}),code=a.room.code;const b=await call({action:'join',code,name:'Bob'});assert.equal(b.room.players.length,2);assert.notEqual(a.token,b.token);assert.ok(!JSON.stringify(b.room).includes(a.token));
+let bad=await roomAPI(new Request('http://localhost/api/race',{method:'POST',body:JSON.stringify({action:'start',code,token:b.token})}),{DB});assert.equal(bad.status,400);
+await call({action:'start',code,token:a.token});let r=JSON.parse(db.prepare('SELECT state FROM courier_rooms WHERE code=?').get(code).state);advance(r,r.starts+500);assert.equal(r.phase,'race');assert.equal(r.players[0].game.distance,r.players[1].game.distance);assert.deepEqual(r.players[0].game.obstacles,r.players[1].game.obstacles);
+mutate(r,{action:'input',token:a.token,seq:1,input:{right:true,jump:true}},r.tick);advance(r,r.tick+250);assert.equal(r.players[0].game.targetLane,1);assert.equal(r.players[1].game.targetLane,0);assert.equal(r.players[0].game.tricks,1);mutate(r,{action:'input',token:a.token,seq:1,input:{jump:true}},r.tick);advance(r,r.tick+50);assert.equal(r.players[0].game.tricks,1);
+advance(r,r.starts+60001);assert.equal(r.phase,'results');assert.ok(r.players.every(p=>p.game.phase!=='play'));r.players.forEach(p=>p.seen=r.starts+60001);mutate(r,{action:'rematch',token:a.token},r.starts+60001);assert.equal(r.round,2);assert.equal(r.phase,'countdown');assert.equal(r.players[0].game.cash,0);console.log('PASS independent room sessions, host-only start, hidden tokens, identical road, server movement, duplicate input rejection, synchronized finish and rematch');
