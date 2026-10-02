@@ -57,3 +57,11 @@ The simulation checks cover deliveries, PvE hazards, car collision endings, rail
 - `cover.png`: promotional illustration created with OpenAI image generation; it is cover art rather than a gameplay screenshot.
 
 Built with HTML, CSS, JavaScript, Canvas, and Web Audio, with OpenAI assistance. Published separately using Sites. This repository contains the portable game source and public assets; local hosting credentials and deployment configuration are excluded.
+
+## Audio and recent polish
+
+Tap **Sound on** to enable the original synthesized soundtrack and effects. Riding, Mr. Bitey’s entrance, the chase, and ambulance scenes have distinct audio. Wheel rumble, rail scrapes, landings, package throws, and barking accompany the action. Sound can be muted at any time.
+
+The toy counter shows **READY** during a chase, a countdown during the 12-second cooldown, **EMPTY** when out of toys, or **CHASE ONLY** between chases. Traffic has varied paint and reflections; landings, rail entry, and deliveries have short visual feedback.
+
+Run audio scheduling checks with `node test-audio.mjs`.
