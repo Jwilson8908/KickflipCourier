@@ -88,3 +88,9 @@ Tap **Sound on** to enable the original synthesized soundtrack and effects. Ridi
 The toy counter shows **READY** during a chase, a countdown during the 12-second cooldown, **EMPTY** when out of toys, or **CHASE ONLY** between chases. Traffic has varied paint and reflections; landings, rail entry, and deliveries have short visual feedback.
 
 Run audio scheduling checks with `node test-audio.mjs`.
+
+## Multiplayer responsiveness
+
+The browser immediately shows steering, jumps, and boost while the server remains responsible for scoring and collisions. Ordered swipes are kept until acknowledged. Opponent updates contain scores and status rather than their full road state. Camera correction is gradual, and obstacles retain fixed world coordinates so the road scrolls once without snapping on each update. Phone rendering uses a lower pixel density to reduce drawing cost.
+
+Run `node test-network-view.mjs` and `node test-mobile-network.mjs` to check rendered coordinates across delayed updates, swipe acknowledgement, duplicate inputs, and bounded prediction.
