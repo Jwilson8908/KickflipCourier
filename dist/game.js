@@ -171,11 +171,19 @@ function deliveryReaction(e){
  ctx.save();ctx.translate(x,y);ctx.globalAlpha=Math.min(1,(e.until-state.elapsed)/.4);
  rect(-w/2,-80,w,155,'#102e3bed');line([[-w/2,-80],[w/2,-80]],e.perfect?'#ffe29b':'#b5e6d4',3);
  const good=e.condition>=.95,excited=e.cargo==='HOT PIZZA'?e.hot:good;
- customer(-45,55,1.4,excited?age:0);
+ customer(-45,55,1.4,e.cargo==='LIVE LOBSTER'?0:excited?age:0);
  if(!excited){line([[-50,-1],[-45,-4],[-40,-1]],'#764c45',2);text('…',-45,-27,20,'#cfdbde');}
- ctx.save();ctx.translate(30,28);cargoArt(e.cargo,e.condition);ctx.restore();
+ if(e.cargo!=='LIVE LOBSTER'){ctx.save();ctx.translate(30,28);cargoArt(e.cargo,e.condition);ctx.restore();}
  let words=e.cargo==='HOT PIZZA'?(e.hot?'HOT PIZZA! YOU LEGEND!':'COLD PIZZA. REALLY?'):e.cargo==='GLASS TROPHY'?(good?'AWARD-WINNING DELIVERY!':'THAT WAS MY AWARD…'):e.cargo==='LIVE LOBSTER'?'GET IN THE POT, CLAWS!':e.cargo==='BIRTHDAY CAKE'?(good?'HAPPY BIRTHDAY!':'WHAT HAPPENED TO THE FROSTING?!'):e.reaction;
- if(e.cargo==='LIVE LOBSTER'){rect(11,31,40,21,'#8097a0');oval(31,31,23,6,'#d9e5e4');line([[4,34],[11,34]],'#b4c6ca',4);line([[51,34],[58,34]],'#b4c6ca',4);ctx.save();ctx.translate(31,18+Math.sin(age*19)*9);ctx.rotate(Math.sin(age*13)*.3);cargoArt(e.cargo);ctx.restore();}
+ if(e.cargo==='LIVE LOBSTER'){
+ // One lobster, held above the pot, then lowered behind its front rim.
+ const settle=clamp((age-.45)/1.2,0,1),wiggle=Math.sin(age*14)*(1-settle)*3,lobsterY=8+settle*27;
+ rect(8,30,48,26,'#536e7d');oval(32,30,25,7,'#213b48');
+ ctx.save();ctx.translate(32+wiggle,lobsterY);ctx.rotate(Math.sin(age*11)*(1-settle)*.12);ctx.scale(.8,.8);cargoArt(e.cargo);ctx.restore();
+ line([[-34,15],[-7,7],[22+wiggle,lobsterY-4]],'#edbf90',5);oval(22+wiggle,lobsterY-4,4,4,'#edbf90');
+ rect(8,33,48,23,'#819aa5');oval(32,56,24,5,'#819aa5');line([[8,32],[56,32]],'#d5e5e7',3);line([[1,38],[8,38]],'#b4c6ca',4);line([[56,38],[63,38]],'#b4c6ca',4);
+ if(settle>.8)text('CLACK!',32,13,10,'#ffc897');
+ }
  if(e.cargo==='GLASS TROPHY'&&good){for(let i=0;i<3;i++){const f=(age*3+i*.33)%1;if(f<.2){text('✦',-110+i*100,-20-i%2*20,30,'#ffffff');}}}
  if(e.cargo==='BIRTHDAY CAKE'){for(const side of [-1,1])customer(side*110,60,.8,good?age:0);}
  text(words,x-x,-55,Math.min(14,w/words.length*1.5),'#fff0be');
