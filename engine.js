@@ -68,3 +68,12 @@ export function rushCourse(s){
   s.obstacles.push({z:base+240,lane:freeLane,type:wave%3===0?'ramp':'rail',length:100,hit:false});
  }
 }
+
+export function createTraining(){const s=createShift();s.training=1;s.spawnAt=s.forkAt=s.dogReadyAt=1e12;s.obstacles=[];s.job.at=1e12;return s;}
+export function updateTraining(s,input,dt){
+ if(s.training===4)return;
+ const steering=!!(input.left||input.right);update(s,input,dt);s.time=60;s.cash=0;s.toastTime=0;
+ if(s.training===1&&steering){s.training=2;s.lane=s.targetLane=0;s.obstacles=[{type:'car',z:s.distance+180,lane:0,hit:false}];}
+ else if(s.training===2){const car=s.obstacles[0];if(s.phase==='ambulance'){s.phase='play';s.ambulance=0;s.stun=0;s.jump=0;s.lane=s.targetLane=0;car.hit=false;car.z=s.distance+180;}else if(car.hit){s.training=3;s.obstacles=[];s.job.at=s.distance+140;s.job.side=-1;}else{s.lane=s.targetLane=0;}}
+ else if(s.training===3){if(s.jobs>0){s.training=4;s.cash=0;s.phase='play';}else if(s.job.at-s.distance< -50)s.job.at=s.distance+140;}
+}

@@ -128,3 +128,9 @@ Select Normal or Rush Hour before starting a solo shift or creating a room. The 
 Rush Hour alternates traffic waves and construction lane closures with calmer gaps. Sections leave one lane open; warnings identify it. Multiplayer racers receive identical sections. Sunset streets, a red Bitey neck scarf, urgent synthesized music, and impatient delivery reactions distinguish the mode. Surviving earns the Overtime Survived scene.
 
 Regular jumps can clear cars when timed high enough. Grounded collisions still end the shift. A Good/Perfect/Late meter helps time throws, near misses have a whoosh, and boost has wind and speed streaks. Results offer Retry, Main Menu, and Skate Shop with evenly spaced full-width buttons. Main Menu lets you change difficulty and first delivery.
+
+## Playable onboarding
+
+The first solo start offers a skippable practice tutorial. Players steer, time a real jump over a car, then throw a delivery. A missed car jump resets the practice obstacle. Practice has no earnings or shop rewards. Learn to Skate on the main menu replays it. Completing or skipping saves the tutorial preference in this browser. The training screen hides job and scoring panels to keep instructions clear.
+
+Latest multiplayer verification used two independent browser sessions on the public game: both showed the same winner and standings. Automated room tests cover synchronized finish and rematch. A separate phone-and-laptop playtest remains recommended before submission.
