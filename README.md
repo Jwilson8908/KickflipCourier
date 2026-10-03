@@ -8,7 +8,7 @@ Deliver ridiculous cargo, land skateboard tricks, and outrun Mr. Bitey—the tin
 
 ## Play
 
-Start a 60-second shift. Deliveries add time; car collisions end your run. Choose safer scenic streets or shortcuts with 50% extra delivery pay. Collect cash from tricks, grinds, near misses, delivery streaks, and perfectly timed throws. Soup and cake lose value after wipeouts.
+Start a 60-second shift. Normal deliveries add two seconds; car collisions end your run. Choose safer scenic streets or shortcuts with 50% extra delivery pay. Collect cash from tricks, grinds, near misses, delivery streaks, and perfectly timed throws. Soup and cake lose value after wipeouts.
 
 Bitey can chase you or steal your package. Boost after him to recover stolen cargo. Collect squeaky toys or refill your bag in the skate shop; carry up to three. Your earnings, cosmetic purchases, unused toys, and personal bests save in this browser.
 
@@ -117,6 +117,14 @@ Customers react to hot or cold pizza, trophy damage, lobster deliveries, and bir
 
 During chases he leaps and snaps after jumps, barks alongside grinds, scrambles after ramp tricks, shakes tossed toys, and shows CHOMP on close calls. These visuals use existing authoritative chase state and do not change collision or scoring rules. Run `node test-dog-reactions.mjs` to check reaction priority.
 
-## Latest balance adjustments
+## Balance adjustments
 
 Multiplayer starts with zero free toys; solo retains toys previously collected or bought. Combos expire after three seconds. Delivery base pay is 25% lower, trick payouts are halved, and most bonuses are roughly halved. Shop prices stay unchanged. The lobster recipient now uses a dedicated two-arm holding pose.
+
+## Rush Hour and latest controls
+
+Select Normal or Rush Hour before starting a solo shift or creating a room. The host’s mode applies to everyone. Rush Hour has separate solo and race bests, 25% extra delivery base pay, tighter throws, faster cars and Bitey, two-second toy distractions, and no delivery time bonus. Hazard Pay is $25 once per chase in either mode.
+
+Rush Hour alternates traffic waves and construction lane closures with calmer gaps. Sections leave one lane open; warnings identify it. Multiplayer racers receive identical sections. Sunset streets, a red Bitey neck scarf, urgent synthesized music, and impatient delivery reactions distinguish the mode. Surviving earns the Overtime Survived scene.
+
+Regular jumps can clear cars when timed high enough. Grounded collisions still end the shift. A Good/Perfect/Late meter helps time throws, near misses have a whoosh, and boost has wind and speed streaks. Results offer Retry, Main Menu, and Skate Shop with evenly spaced full-width buttons. Main Menu lets you change difficulty and first delivery.

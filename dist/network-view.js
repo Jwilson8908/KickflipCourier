@@ -15,5 +15,6 @@ export function advanceView(s,dt,controls={}){
  const step=Math.min(dt,Math.max(0,.8-s.viewAge));s.viewAge+=dt;
  const correction=Math.max(-s.speed*step*.6,Math.min(s.speed*step*.6,(s.viewCorrection||0)*(1-Math.exp(-dt*9))));s.viewCorrection=(s.viewCorrection||0)-correction;
  const desired=s.stun>0?10:controls.brake?18:(controls.boost||controls.screenBoost)?(s.route==='safe'?50:60):30;s.speed+=(desired-s.speed)*Math.min(1,step*5);const travel=s.speed*step-correction;s.distance+=travel;
+ if(s.difficulty==='hard')for(const o of s.obstacles)if(o.type==='car'&&!o.hit&&(o.section===undefined||o.z-s.distance<450))o.z-=14*step;
  s.lane+=(s.targetLane-s.lane)*(1-Math.exp(-dt*10));s.elapsed+=step;s.jump=Math.max(0,s.jump-step);s.time=Math.max(0,s.time-step);
 }

@@ -53,3 +53,11 @@ main.playing,main.playing #hud{user-select:none;-webkit-user-select:none;-webkit
 .job-meta{flex-wrap:wrap}#cargoRule{flex-basis:100%;width:100%}
 
 #cargoStatus{margin-top:8px;padding:8px 9px;background:#071f2d;border:1px solid #668a87;border-radius:6px}#cargoStatus>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:8px}#cargoLabel{font-size:10px;letter-spacing:.4px;color:#bde7d1}#cargoValue{font-size:20px;line-height:1;color:#ffe5a0;font-variant-numeric:tabular-nums}.cargo-meter{height:5px;background:#284d56;border-radius:3px;margin-top:6px;overflow:hidden}.cargo-meter i{display:block;height:100%;background:#ffc56b}#cargoStatus.urgent{border-color:#ff806c}#cargoStatus.urgent #cargoLabel,#cargoStatus.urgent #cargoValue{color:#ff9c88}#cargoStatus.urgent .cargo-meter i{background:#ff806c}
+
+.difficulty-label{display:block;color:#ffd082;font-size:12px;font-weight:800;margin-top:15px}#difficulty{width:100%;padding:10px;margin-top:6px;border:1px solid #84a9a7;border-radius:7px;background:#173b48;color:#fff;font-size:15px}#difficultyInfo{display:block;text-align:left;margin-top:6px;font-size:12px;color:#bdd5d7}
+
+#trafficWarning{position:absolute;bottom:115px;left:50%;transform:translateX(-50%);max-width:90%;padding:7px 12px;background:#552e3de8;border:1px solid #ffcc79;border-radius:6px;color:#ffe2ac;font-size:12px;font-weight:900;pointer-events:none}
+
+#toast{top:auto;bottom:190px;font-size:14px;padding:7px 12px;border-radius:6px;max-width:min(420px,88%);line-height:1.25}#toast.show{opacity:.95}.accuracy-meter{height:8px;position:relative;background:#c57857;border-radius:4px;margin:8px 0 3px;overflow:hidden}.accuracy-meter span{position:absolute;top:0;height:100%;background:#72b6aa}.accuracy-meter #accuracyPerfect{background:#ffe39a}.accuracy-meter i{position:absolute;top:0;width:3px;height:100%;background:#fff;box-shadow:0 0 3px #183441}.accuracy-labels{display:flex;justify-content:space-between;font-size:9px;color:#c8dbd8}.accuracy-labels b{color:#ffe39a}@media(max-width:600px){#toast{bottom:155px;font-size:11px;padding:6px 9px}}
+
+#end .result-actions{display:grid;grid-template-columns:1fr;gap:12px;margin-top:20px}#end .result-actions button{display:block;width:100%;min-height:48px;margin:0;padding:12px 16px}#end .result-actions .primary{margin-top:4px;min-height:54px}

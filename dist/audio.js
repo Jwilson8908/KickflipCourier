@@ -6,6 +6,8 @@ export class GameAudio {
   tone(f,t,d=.12,v=.05,type='triangle',end=f){const c=this.context,o=c.createOscillator(),g=c.createGain();o.type=type;o.frequency.setValueAtTime(f,t);o.frequency.exponentialRampToValueAtTime(Math.max(20,end),t+d);g.gain.setValueAtTime(.0001,t);g.gain.linearRampToValueAtTime(v,t+.008);g.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+d+.02);o.onended=()=>{o.disconnect();g.disconnect();};}
   noise(t,d,v,cutoff=1800){const c=this.context,b=c.createBuffer(1,Math.ceil(c.sampleRate*d),c.sampleRate),data=b.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=Math.random()*2-1;const s=c.createBufferSource(),g=c.createGain(),f=c.createBiquadFilter();s.buffer=b;f.type='lowpass';f.frequency.value=cutoff;g.gain.setValueAtTime(v,t);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f);f.connect(g);g.connect(c.destination);s.start(t);s.onended=()=>{s.disconnect();f.disconnect();g.disconnect();};}
   effect(type){if(!this.enabled||this.context?.state!=='running')return;const t=this.context.currentTime;
+    if(type==='nearMiss'){this.noise(t,.22,.045,3200);this.tone(850,t,.18,.025,'sine',180);return;}
+    if(type==='overtime'){[523,659,784,1047,988,1047].forEach((f,i)=>this.tone(f,t+i*.15,.25,.045,'triangle'));this.noise(t+.8,.45,.035,4500);return;}
     if(type==='crash'){this.noise(t,.35,.16,900);this.tone(120,t,.3,.08,'sawtooth',35);return;}
     if(type==='grind'){this.noise(t,.28,.08,3000);this.tone(900,t,.15,.025,'triangle',1500);return;}
     if(type==='bark'){[0,.19,.44].forEach((a,i)=>{this.tone(510-i*45,t+a,.13,.045,'sawtooth',190);this.tone(255-i*22,t+a,.1,.035,'triangle',100);this.noise(t+a,.085,.05,1400);});return;}
@@ -28,8 +30,8 @@ export class GameAudio {
     const notes={jump:[420,840],deliver:[523,659,784,1047],squeak:[1400,750,1700],escape:[392,523,659,1047],complete:[523,659,784,1047,784,1047],start:[392,523,784],miss:[330,247,165],throw:[700,350],land:[100,65]}[type]||[];
     notes.forEach((f,i)=>this.tone(f,t+i*.08,type==='complete'?.23:.12,.055,'triangle',type==='jump'?f*1.4:f));
   }
-  tick(s,paused,boost){if(!this.enabled||this.context?.state!=='running')return;const mode=paused||!s?'silent':s.phase==='ambulance'?'ambulance':s.phase!=='play'?'silent':s.dogIntro>0?'intro':s.chase||s.stolen?'chase':'ride';if(mode!==this.mode){this.mode=mode;this.next=this.context.currentTime+.05;this.step=0;}if(mode==='silent')return;
-    const c=this.context,beat=mode==='ambulance'?.32:60/(mode==='intro'?100:mode==='chase'?172:124)/4;if(this.next<c.currentTime-.2)this.next=c.currentTime;
+  tick(s,paused,boost){if(!this.enabled||this.context?.state!=='running')return;const mode=paused||!s?'silent':s.phase==='ambulance'?'ambulance':s.phase!=='play'?'silent':s.dogIntro>0?'intro':s.chase||s.stolen?'chase':s.difficulty==='hard'?'rush':'ride';if(mode!==this.mode){this.mode=mode;this.next=this.context.currentTime+.05;this.step=0;}if(mode==='silent')return;
+    const c=this.context,beat=mode==='ambulance'?.32:60/(mode==='intro'?100:mode==='chase'?172:mode==='rush'?148:124)/4;if(this.next<c.currentTime-.2)this.next=c.currentTime;
     while(this.next<c.currentTime+.1){const t=this.next,n=this.step%32,chase=mode==='chase',roots=[48,53,57,55],root=roots[Math.floor(n/8)],hz=m=>440*2**((m-69)/12);
       if(mode==='ambulance'){
         // Alternating emergency wail plus engine rumble throughout either rescue.
@@ -54,6 +56,12 @@ export class GameAudio {
         if(n%2===0)this.tone(hz(motif[Math.floor(n/2)%8]),t,beat*1.4,.027,'sawtooth');
         if(n%8===0){this.tone(hz(45),t,beat*3,.023,'triangle');this.tone(hz(51),t,beat*3,.018,'triangle');}
         if(s.grindEnd&&n%2===1)this.noise(t,.07,.018,3000);
+      }else if(mode==='rush'){
+        if(n%2===0)this.tone(hz([40,40,43,45,40,47,43,38][Math.floor(n/2)%8]),t,beat*1.3,.045,'sawtooth');
+        if(n%4===0)this.tone(125,t,.12,.06,'sine',40);
+        if(n%4===2)this.noise(t,.09,.04,2200);
+        this.noise(t,.022,.012,5500);
+        if(n%8===6)this.tone(hz(64),t,beat,.02,'triangle');
       }else{
 
       if(n%4===0)this.tone(125,t,.13,.065,'sine',40);
@@ -67,8 +75,9 @@ export class GameAudio {
       if(boost&&n%4===2)this.tone(hz(root+31),t,beat,.015,'triangle');
       if(s.grindEnd&&n%2===1)this.noise(t,.07,.018,3000);
       }
-      if(['ride','chase'].includes(mode)){
+      if(['ride','rush','chase'].includes(mode)){
         if(s.jump<=0&&!s.grindEnd)this.noise(t,beat,.008+Math.min(60,s.speed||30)*.00012,450+(s.speed||30)*12);
+        if(boost&&s.speed>38)this.noise(t,beat,.015,1800);
         if(s.grindEnd)this.noise(t,beat,.03,2800);
       }
       this.step++;this.next+=beat;
