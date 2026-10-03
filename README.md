@@ -134,3 +134,7 @@ Regular jumps can clear cars when timed high enough. Grounded collisions still e
 The first solo start offers a skippable practice tutorial. Players steer, time a real jump over a car, then throw a delivery. A missed car jump resets the practice obstacle. Practice has no earnings or shop rewards. Learn to Skate on the main menu replays it. Completing or skipping saves the tutorial preference in this browser. The training screen hides job and scoring panels to keep instructions clear.
 
 Latest multiplayer verification used two independent browser sessions on the public game: both showed the same winner and standings. Automated room tests cover synchronized finish and rematch. A separate phone-and-laptop playtest remains recommended before submission.
+
+## Challenge submission description
+
+Kickflip Courier is a skateboard delivery game with solo shifts and 2–4 player races. Deliver ridiculous cargo, land tricks, dodge traffic, and outrun Mr. Bitey, a furious Chihuahua who wants your job. Synchronizing multiplayer and smoothing phone controls were the biggest challenges; creating Bitey’s dramatic scenes was the most fun. I learned to guide and debug an AI-built game through repeated testing. Next: more routes, deliveries, and tricks!
