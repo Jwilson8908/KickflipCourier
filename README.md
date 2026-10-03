@@ -105,7 +105,7 @@ Additional checks: `node test-reconnect.mjs`, `node test-toy-difficulty.mjs`, an
 
 ## Cargo challenges and status
 
-Choose hot pizza, a glass trophy, a live lobster, or a birthday cake as your first delivery. Pizza has a 25-second heat countdown and earns up to $25 extra when delivered hot; cold pizza keeps its base pay. Trophy integrity and cake frosting bars show damage that reduces delivery value. Birthday cakes need slow, straight landings.
+Choose hot pizza, a glass trophy, a live lobster, or a birthday cake as your first delivery. Pizza has a 25-second heat countdown and earns up to $12 extra when delivered hot; cold pizza keeps its base pay. Trophy integrity and cake frosting bars show damage that reduces delivery value. Birthday cakes need slow, straight landings.
 
 Lobsters count down to an escape attempt, then give a three-second warning. Press **F** or tap **Secure lobster** during that window. Escapes lose cargo and three seconds; successfully securing and delivering earns a bonus. These mechanics and HUD indicators work in solo and multiplayer, with authoritative race handling.
 
@@ -116,3 +116,7 @@ Run `node test-cargo.mjs` and `node test-cargo-status.mjs` for cargo behavior, p
 Customers react to hot or cold pizza, trophy damage, lobster deliveries, and birthday cake condition. Perfect throws use a slower catch animation with a tip burst. Delivery reactions hide during Bitey’s entrance so the cinematic stays in focus. Bitey carries a pizza slice when stealing pizza.
 
 During chases he leaps and snaps after jumps, barks alongside grinds, scrambles after ramp tricks, shakes tossed toys, and shows CHOMP on close calls. These visuals use existing authoritative chase state and do not change collision or scoring rules. Run `node test-dog-reactions.mjs` to check reaction priority.
+
+## Latest balance adjustments
+
+Multiplayer starts with zero free toys; solo retains toys previously collected or bought. Combos expire after three seconds. Delivery base pay is 25% lower, trick payouts are halved, and most bonuses are roughly halved. Shop prices stay unchanged. The lobster recipient now uses a dedicated two-arm holding pose.

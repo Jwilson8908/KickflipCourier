@@ -21,7 +21,7 @@ export function mutate(room,b,now){advance(room,now);const p=room.players.find(p
   if(p.id!==room.host)throw Error('Only the host can start the race.');
   if(!['lobby','results'].includes(room.phase))throw Error('Race already underway.');
   const online=room.players.filter(x=>now-x.seen<10000);if(online.length<2)throw Error('Two connected couriers are needed.');room.players=online;room.phase='countdown';room.starts=now+3500;room.tick=room.starts;room.round++;
-  const seed=(now>>>0);for(const x of room.players){x.rng=seed;x.input={};x.seq=0;x.game=createShift(5+(room.round-1)%4);x.game.toys=1;x.game.dogIntro=0;x.game.dogEvents=0;x.game.dogReadyAt=14;x.game.forkAt=1e12;x.game.spawnAt=1e12;
+  const seed=(now>>>0);for(const x of room.players){x.rng=seed;x.input={};x.seq=0;x.game=createShift(5+(room.round-1)%4);x.game.toys=0;x.game.dogIntro=0;x.game.dogEvents=0;x.game.dogReadyAt=14;x.game.forkAt=1e12;x.game.spawnAt=1e12;
 let terrain=seed;const terrainRandom=()=>{terrain=(Math.imul(1664525,terrain)+1013904223)>>>0;return terrain/4294967296;};
 for(let z=700;z<4000;z+=170){const types=['car','barrel','rail','ramp','sprinkler','car','barrel','rail','ramp','sprinkler','toy','rail'],type=types[Math.floor(terrainRandom()*types.length)];x.game.obstacles.push({z,lane:Math.floor(terrainRandom()*3)-1,type,length:type==='rail'?180:0,hit:false});}}
  }
