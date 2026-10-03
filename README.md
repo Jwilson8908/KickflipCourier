@@ -110,3 +110,9 @@ Choose hot pizza, a glass trophy, a live lobster, or a birthday cake as your fir
 Lobsters count down to an escape attempt, then give a three-second warning. Press **F** or tap **Secure lobster** during that window. Escapes lose cargo and three seconds; successfully securing and delivering earns a bonus. These mechanics and HUD indicators work in solo and multiplayer, with authoritative race handling.
 
 Run `node test-cargo.mjs` and `node test-cargo-status.mjs` for cargo behavior, payouts, secure input, countdowns, and condition indicators.
+
+## Delivery reactions and Mr. Bitey animations
+
+Customers react to hot or cold pizza, trophy damage, lobster deliveries, and birthday cake condition. Perfect throws use a slower catch animation with a tip burst. Delivery reactions hide during Bitey’s entrance so the cinematic stays in focus. Bitey carries a pizza slice when stealing pizza.
+
+During chases he leaps and snaps after jumps, barks alongside grinds, scrambles after ramp tricks, shakes tossed toys, and shows CHOMP on close calls. These visuals use existing authoritative chase state and do not change collision or scoring rules. Run `node test-dog-reactions.mjs` to check reaction priority.
