@@ -2,7 +2,7 @@
 
 [Play the game](https://kickflip-courier.jordanw1989.chatgpt.site/)
 
-![Kickflip Courier cover art](cover.png)
+![Kickflip Courier cover art](cover-chicken.jpg)
 
 Deliver ridiculous cargo, land skateboard tricks, and outrun Mr. Bitey—the tiny Chihuahua who wants your job. An original browser arcade game with solo shifts and 2–4 player cash races for phones and laptops. No login or installation required.
 
@@ -77,7 +77,7 @@ Multiplayer tests use Node.js 22.13+ with its built-in SQLite module. Result-sce
 - `game.js`: canvas rendering, UI, controls, audio, and browser saves.
 - `index.html` and `style.css`: responsive game interface.
 - `dog.png`: original generated Chihuahua art used in the game.
-- `cover.png`: promotional illustration created with OpenAI image generation; it is cover art rather than a gameplay screenshot.
+- `cover-chicken.jpg`: promotional illustration created with OpenAI image generation; it is cover art rather than a gameplay screenshot.
 
 Built with HTML, CSS, JavaScript, Canvas, and Web Audio, with OpenAI assistance. Published separately using Sites. This repository contains the portable game source and public assets; local hosting credentials and deployment configuration are excluded.
 
